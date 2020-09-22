@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "SignIn",
   data() {
@@ -47,14 +46,24 @@ export default {
       const username = this.username;
       const password = this.password;
 
+      this.$store
+        .dispatch("signin", { username, password })
+        .then(() => this.$router.push("/"))
+        .catch((err) => console.log(err));
+
       // get token
-      axios
-        .get("/back_api/auth?username=" + username + "&password=" + password)
-        .then((response) => {
-          console.log(response.data["data"]["token"]);
-          // window.alert(response.data["data"]["token"]);
-          this.$router.replace("/");
-        });
+      // this.$http
+      //   .get("/back_api/auth?username=" + username + "&password=" + password)
+      //   .then((response) => {
+      //     console.log(response.data["data"]["token"]);
+      //     console.log(response.data["code"]);
+      //     // window.alert(response.data["data"]["token"]);
+      //     if (response.data["code"] == 200) {
+      //       this.$router.replace("/");
+      //     } else {
+      //       window.alert("username or password error.");
+      //     }
+      //   });
 
       // if (username == "test" && password == "test12345") {
       //   this.$router.replace("/");
